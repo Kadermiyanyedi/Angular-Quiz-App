@@ -1,0 +1,23 @@
+<div class="container mb-3">
+    <div class="card">
+        <div class="card-content">
+
+            <h3 class="card-header">{{q.question}}</h3>
+            <p>{{ q.category }}</p>
+            <form>
+                <div class="card-action">
+                    <ul class="collection">
+                        <ng-container *ngFor="let option of q.incorrect_answers;let i = index">
+                            <li *ngIf="option != null" class="collection-item" (click)="VerifyAnswer(option, $event)"
+                                style="background-color: rgb(106, 188, 190);">
+                                {{option}}
+                            </li>
+                        </ng-container>
+                    </ul>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
