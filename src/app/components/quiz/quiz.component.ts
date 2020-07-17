@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class QuizComponent implements OnInit {
   q: any;
   correctAnswer: any;
+  qlen: number;
   index: number;
   score: number;
   sub;
@@ -19,6 +20,7 @@ export class QuizComponent implements OnInit {
 
   ngOnInit(): void {
     this.getQuestion();
+    this.qlen = +localStorage.getItem('len')
   }
 
   ngOnDestroy() {
@@ -29,7 +31,7 @@ export class QuizComponent implements OnInit {
     if (answer === this.correctAnswer) {
       this.score = this.score + 10
     }
-    if (this.index == 9) {
+    if (this.index == this.qlen - 1) {
       // when the last Question 
       console.log("Bitti")
       localStorage.setItem('score', this.score.toString())

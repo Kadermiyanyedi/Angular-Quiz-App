@@ -21,6 +21,7 @@ export class ApiService {
         data['results'][i]['incorrect_answers'][random] = correctAnswer
         data['results'][i]['incorrect_answers'].push(tmp)
         localStorage.setItem('questions', JSON.stringify(data))
+        localStorage.setItem('len', data['results'].length)
 
         // console.log(data['results'][this.index])
         // console.log(data['results'].length)
