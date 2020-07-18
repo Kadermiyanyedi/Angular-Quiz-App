@@ -1,7 +1,9 @@
 <div class="container mb-3">
     <div class="card">
         <div class="card-content">
-
+            <div class="basic-container">
+                <mat-progress-bar  [value]="progressbarValue"></mat-progress-bar>
+            </div>
             <h3 class="card-header">{{q.question}}</h3>
             <p>{{ q.category }}</p>
             <form>

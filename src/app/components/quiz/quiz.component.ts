@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../_services/api.service'
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { interval, Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -14,8 +16,11 @@ export class QuizComponent implements OnInit {
   index: number;
   score: number;
   sub;
+  progressbarValue = 100;
+  curSec: number = 0;
   constructor(private _apiService: ApiService, private _route: ActivatedRoute, private _router: Router) {
     this.score = 0
+    this.startTimer(60)
   }
 
   ngOnInit(): void {
@@ -66,6 +71,19 @@ export class QuizComponent implements OnInit {
     })
 
   }
+  startTimer(seconds: number) {
+    const time = seconds;
+    const timer$ = interval(1000);
 
+    const sub = timer$.subscribe((sec) => {
+      this.progressbarValue = 100 - sec * 100 / seconds;
+      this.curSec = sec;
 
+      if (this.curSec === seconds) {
+        this._router.navigate(['/result']);
+        sub.unsubscribe();
+      }
+    });
+  }
 }
+
