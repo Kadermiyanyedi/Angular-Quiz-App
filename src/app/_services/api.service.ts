@@ -6,12 +6,12 @@ import { HttpClient } from "@angular/common/http";
 })
 export class ApiService {
 
-  private getUrl = 'https://opentdb.com/api.php?amount=10&category=18&type=multiple'
-
+  // private getUrl = 'https://opentdb.com/api.php?amount=10&category=18&type=multiple'
   constructor(private _http: HttpClient) { }
 
-  getQuestion() {
-    return this._http.get(this.getUrl).subscribe(data => {
+  getQuestion(difficulty: string) {
+    var getUrl = 'https://opentdb.com/api.php?amount=10&category=18&difficulty=' + difficulty + '&type=multiple'
+    return this._http.get(getUrl).subscribe(data => {
       for (var i = 0; i < data['results'].length; i++) {
         var random = Math.floor(Math.random() * 3)
         var correctAnswer = data['results'][i].correct_answer;
