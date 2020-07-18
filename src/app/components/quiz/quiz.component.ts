@@ -18,12 +18,14 @@ export class QuizComponent implements OnInit {
   sub;
   progressbarValue = 100;
   curSec: number = 0;
+  difficulty: string;
   constructor(private _apiService: ApiService, private _route: ActivatedRoute, private _router: Router) {
     this.score = 0
     this.startTimer(60)
   }
 
   ngOnInit(): void {
+    this.difficulty = localStorage.getItem("difficulty")
     this.getQuestion();
     this.qlen = +localStorage.getItem('len')
   }
@@ -38,9 +40,7 @@ export class QuizComponent implements OnInit {
     }
     if (this.index == this.qlen - 1) {
       // when the last Question 
-      console.log("Bitti")
       localStorage.setItem('score', this.score.toString())
-      console.log("score", this.score)
       this._router.navigate(['/result']);
 
 
@@ -59,12 +59,12 @@ export class QuizComponent implements OnInit {
         var data = JSON.parse(localStorage.getItem('questions'))
         this.q = data.results[this.index]
         this.correctAnswer = this.q.correct_answer
-        console.log(this.correctAnswer)
 
       } else {
-        this._apiService.getQuestion()
+        this._apiService.getQuestion(this.difficulty)
         var data = JSON.parse(localStorage.getItem('questions'))
         this.q = data.results[this.index]
+        localStorage.setItem("q", this.q)
         this.correctAnswer = this.q.correct_answer
 
       }
